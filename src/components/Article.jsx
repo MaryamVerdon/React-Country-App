@@ -28,6 +28,11 @@ const Article = ({article}) => {
             .then(() => setIsEdit(false));
     };
 
+    const handleDelete = () => {
+        axios.delete("http://localhost:3001/articles/" + article.id);
+        window.location.reload();
+    };
+
     return (
         <div className="article" style={{ background: isEdit ? "#f3feff" : "white"}}>
             <div className="card-header">
@@ -42,7 +47,11 @@ const Article = ({article}) => {
                 {
                     isEdit ? <button onClick={()=> handleEdit()}>Valider</button> : <button onClick={() => setIsEdit(true)}>Editer</button>
                 }
-                <button>Supprimer</button>
+                <button onClick={() => {
+                    if (window.confirm("Voulez-vous vraiment supprimer cet article ? ")){
+                        handleDelete();
+                    }
+                }}>Supprimer</button>
             </div>
         </div>
     );
